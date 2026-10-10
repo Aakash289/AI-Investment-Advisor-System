@@ -1,0 +1,113 @@
+# mcp_servers/filings/xbrl_tag_map.yaml: which SEC XBRL tag gives each figure (design 14.3).
+#
+# Companies do not all use the same tag for the same figure, and some switch tags
+# over the years (NVIDIA moved from "Revenues" to the contract-revenue tag). So each
+# figure lists tags in order of preference, and for every fiscal year the first tag
+# that has a value for that year is used.
+#
+# kind: duration = a figure over a year (revenue, profit, cash flow)
+#       instant  = a balance on the year-end date (equity, debt, cash)
+# taxonomy: us-gaap unless stated; dei is SEC's company-information taxonomy. A single tag
+#       can name its own taxonomy as "us-gaap:Name".
+# unit: the unit key in SEC's file (USD, USD/shares, shares)
+
+revenue:
+  kind: duration
+  unit: USD
+  tags: [RevenueFromContractWithCustomerExcludingAssessedTax, Revenues, SalesRevenueNet,
+         RevenueFromContractWithCustomerIncludingAssessedTax, InterestAndDividendIncomeOperating]
+cost_of_revenue:
+  kind: duration
+  unit: USD
+  tags: [CostOfRevenue, CostOfGoodsAndServicesSold, CostOfGoodsSold]
+operating_income:
+  kind: duration
+  unit: USD
+  tags: [OperatingIncomeLoss]
+# Pre-tax income, used to rebuild operating income for companies that report no operating
+# income line (Pfizer, Johnson & Johnson: found in the 7 October spread check): operating
+# income = pre-tax income + interest expense, flagged as rebuilt (normaliser.py).
+pretax_income:
+  kind: duration
+  unit: USD
+  tags: [IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest,
+         IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments]
+net_income:
+  kind: duration
+  unit: USD
+  tags: [NetIncomeLoss, ProfitLoss]
+eps_diluted:
+  kind: duration
+  unit: USD/shares
+  tags: [EarningsPerShareDiluted, EarningsPerShareBasicAndDiluted]
+interest_expense:
+  kind: duration
+  unit: USD
+  tags: [InterestExpense, InterestExpenseNonoperating, InterestExpenseDebt]
+income_tax:
+  kind: duration
+  unit: USD
+  tags: [IncomeTaxExpenseBenefit]
+depreciation_amortization:
+  kind: duration
+  unit: USD
+  # DepreciationAmortizationAndOther: used by some companies for their cash flow line.
+  tags: [DepreciationDepletionAndAmortization, DepreciationAndAmortization, DepreciationAmortizationAndAccretionNet,
+         DepreciationAmortizationAndOther]
+# The two parts, for companies that report no combined line (Microsoft, checked 7 October:
+# its combined line uses its own tag, but it reports Depreciation and
+# AmortizationOfIntangibleAssets in the standard taxonomy). normaliser.py adds them up for
+# any year with no combined figure, flagged as rebuilt.
+depreciation_only:
+  kind: duration
+  unit: USD
+  tags: [Depreciation]
+intangible_amortization:
+  kind: duration
+  unit: USD
+  tags: [AmortizationOfIntangibleAssets, FiniteLivedIntangibleAssetsAmortizationExpense]
+operating_cash_flow:
+  kind: duration
+  unit: USD
+  tags: [NetCashProvidedByUsedInOperatingActivities]
+capex:
+  kind: duration
+  unit: USD
+  tags: [PaymentsToAcquirePropertyPlantAndEquipment, PaymentsToAcquireProductiveAssets]
+dividends_paid:
+  kind: duration
+  unit: USD
+  tags: [PaymentsOfDividends, PaymentsOfDividendsCommonStock]
+buybacks:
+  kind: duration
+  unit: USD
+  tags: [PaymentsForRepurchaseOfCommonStock]
+total_equity:
+  kind: instant
+  unit: USD
+  tags: [StockholdersEquity, StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest]
+long_term_debt:
+  kind: instant
+  unit: USD
+  tags: [LongTermDebtNoncurrent, LongTermDebt]
+short_term_debt:
+  kind: instant
+  unit: USD
+  tags: [LongTermDebtCurrent, DebtCurrent, ShortTermBorrowings]
+cash:
+  kind: instant
+  unit: USD
+  tags: [CashAndCashEquivalentsAtCarryingValue, CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents]
+total_assets:
+  kind: instant
+  unit: USD
+  tags: [Assets]
+# A tag written "us-gaap:Name" is read from that taxonomy instead of the figure's own.
+# Companies with several share classes (Alphabet) report the cover-page count per class,
+# which SEC's company facts file leaves out; the balance sheet count is tried next, and
+# filings/server.py has two more fallbacks (net income / diluted EPS, then yfinance).
+shares_outstanding:
+  kind: instant
+  unit: shares
+  taxonomy: dei
+  tags: [EntityCommonStockSharesOutstanding, "us-gaap:CommonStockSharesOutstanding"]

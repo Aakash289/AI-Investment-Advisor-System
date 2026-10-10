@@ -1,0 +1,43 @@
+isCurtail: False
+curtailMsg: 
+stockHeaders:
+  unique_name | type | name
+  get_full_name | string | Stock
+  NSEcode | string | NSE Symbol
+  BSEcode | string | BSEcode
+  stock_id | number | Stock ID
+  page_type | string | Page type
+  ISIN | string | isin
+  d_value | number | Durability Score
+  v_value | number | Valuation Score
+  m_value | number | Momentum Score
+  d_color | string | D color
+  v_color | string | V color
+  m_color | string | M color
+stockData:
+  Reliance Industries Ltd., RELIANCE, 500325, 1127, Equity, INE002A01018, 60, 47, 30, positive, neutral, negative
+tableData:
+  ["Anish Shah","Designated Person","Acquisition","2026-05-22",880,509298,0.0,7e-06,1359.75,"2026-05-20","2026-05-20","Insider Trading",null,"Equity Shares","Inheritance","2026-05-22",1196580.0], ["Radhika Merchant","Directors Immediate Relative","Revoke","2026-05-20",4895,8506,0.0,3.6e-05,1336.4,"2026-05-15","2026-05-15","Insider Trading",null,"Equity Shares","Revocation Of Pledge","2026-05-20",6541678.0], ["B Narayan","Designated Person","Disposal","2026-02-18",2320,1600,0.0,1.7e-05,1419.9,"2026-02-13","2026-02-13","Insider Trading",null,"Equity Shares","Off Market","2026-02-18",3294168.0], ["Shaila Narayan","Immediate Relative","Acquisition","2026-02-18",3120,29620,0.0,2.3e-05,1419.9,"2026-02-13","2026-02-13","Insider Trading",null,"Equity Shares","Off Market","2026-02-18",4430088.0], ["Ashwini Darshan Naphade","Immediate Relative","Acquisition","2026-02-09",960,1104,0.0,7e-06,1390.15,"2026-02-02","2026-02-02","Insider Trading",null,"Equity Shares","Inheritance","2026-02-09",1334544.0], ["Poornima Dileep Choksi","Immediate Relative","Revoke","2026-01-09",1064,1464,0.0,8e-06,1577.45,"2026-01-05","2026-01-05","Insider Trading",null,"Equity Shares","Revocation Of Pledge","2026-01-09",1678407.0], ["Shobha Agarwal","Immediate Relative","Disposal","2025-09-12",25000,1038810,0.01,0.000185,1385.0,"2025-09-12","2025-09-12","Insider Trading",null,"Equity Shares","Market Sale","2025-09-12",34625000.0], ["Shobha Agarwal","Immediate Relative","Disposal","2025-09-12",100000,1063810,0.01,0.000739,1385.0,"2025-09-09","2025-09-11","Insider Trading",null,"Equity Shares","Market Sale","2025-09-12",138500000.0], ["ANURADHA SETHURAMAN (Revised)","Immediate Relative","Pledge","2024-01-28",5000,157166,0.0,7.4e-05,2550.25,"2023-06-30","2023-06-30","Insider Trading",null,"Equity Shares","Creation Of Pledge","2024-01-28",12751250.0], ["SHOBHA AGARWAL","Immediate Relative","Disposal","2023-12-14",150000,581905,0.01,0.002217,null,"2023-12-11","2023-12-11","Insider Trading",null,"Equity Shares","Gift","2023-12-14",0.0], ["DIPALI AJAY KEER","Immediate Relative","Disposal","2023-11-29",933,1200,0.0,1.4e-05,2397.0,"2023-11-23","2023-11-23","Insider Trading",null,"Equity Shares","Market Sale","2023-11-29",2236401.0], ["ANURADHA SETHURAMAN (Revised)","Immediate Relative","Pledge","2023-10-03",5000,152166,0.0,7.4e-05,2550.25,"2023-06-30","2023-06-30","Insider Trading",null,"Equity Shares","Creation Of Pledge","2023-10-03",12751250.0], ["SHOBHA AGARWAL","Immediate Relative","Acquisition","2023-09-27",150000,731905,0.01,0.002217,null,"2023-09-22","2023-09-22","Insider Trading",null,"Equity Shares","Gift","2023-09-27",0.0], ["Reliance Industrial Investments & Holdings Ltd","Promoter","Acquisition","2023-09-05",240942006,240942006,3.56,3.56,null,"2023-08-19","2023-08-19","SAST","29(1)",null,"Off Market","2023-08-22",null], ["Reliance Industrial Investments & Holdings Ltd","Promoter","Acquisition","2023-08-31",240942006,240942006,3.56,3.56,null,"2023-08-19","2023-08-19","SAST","29(1)",null,"Off Market","2023-08-22",null], ["Reliance Industrial Investments and Holdings Limited","Promoter Group","Acquisition","2023-08-22",240942006,240942006,3.56,3.561143,null,"2023-08-19","2023-08-19","Insider Trading",null,"Equity Shares","Off Market","2023-08-22",0.0], ["ANURADHA SETHURAMAN","Immediate Relative","Pledge","2023-07-03",5000,119966,0.0,7.4e-05,2550.25,"2023-06-30","2023-06-30","Insider Trading",null,"Equity Shares","Creation Of Pledge","2023-07-03",12751250.0], ["SHOBHA AGARWAL","Immediate Relative","Acquisition","2023-05-23",125000,581905,0.01,0.001848,null,"2023-05-22","2023-05-22","Insider Trading",null,"Equity Shares","Gift","2023-05-23",0.0], ["Nasib Kapoor","Immediate Relative","Disposal","2022-03-24",2500,0,0.0,3.7e-05,2550.0,"2022-03-23","2022-03-23","Insider Trading",null,"Equity Shares","Market Sale","2022-03-24",6375000.0], ["Nasib Kapoor","Immediate Relative","Disposal","2022-03-24",2500,2500,0.0,3.7e-05,2524.0,"2022-03-22","2022-03-22","Insider Trading",null,"Equity Shares","Market Sale","2022-03-24",6310000.0], ["Nasib Kapoor","Immediate Relative","Disposal","2022-03-11",5000,5000,0.0,7.4e-05,2400.0,"2022-03-10","2022-03-10","Insider Trading",null,"Equity Shares","Market Sale","2022-03-11",12000000.0]
+tableHeaders:
+  name | type | unique_name
+  Client Name | string | actor
+  Client Category | string | actor_category_text
+  Action | string | transaction_type_text
+  Reported to Exchange | date | report_date
+  Quantity | number | holding_change
+  Post Transaction Holding | number | holding_after
+  Post Transaction Holding % | percentage | holdingP_after
+  %Traded | percentage | holdingP_change
+  Average Price | number | average_price
+  Start Date | date | start_date
+  End Date | date | end_date
+  Insider/SAST | string | get_sast_type_display
+  Regulation Type | string | regulation_text
+  Security Type | string | security_type_text
+  Mode | string | mode
+  Reported to Exchange | date | date
+  Value | decimal | transaction_value
+extraHeaders:
+  []
+insight:
+  The latest SAST disclosure was made by Reliance Industrial Investments & Holdings Ltd in Reliance Industries Ltd. where Acquisition of 240942006 shares done  was reported to the exchange on August 22, 2023, The latest insider trade disclosure was made by Anish Shah in Reliance Industries Ltd. where Acquisition of 880 Equity Shares done at an average price of ₹1359.75 was reported to the exchange on May 22, 2026

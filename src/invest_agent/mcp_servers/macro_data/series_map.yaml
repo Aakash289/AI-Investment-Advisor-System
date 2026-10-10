@@ -1,0 +1,26 @@
+# mcp_servers/macro_data/series_map.yaml: the FRED series behind each indicator (design 14.5).
+#
+#   id          the FRED series
+#   frequency   "m" asks FRED for monthly averages of a daily series, so every change
+#               below is measured month to month
+#   transform   level        the latest value as published (rates, spreads, unemployment)
+#               yoy          % change against the same month a year earlier (price and
+#                            production indices)
+#               yoy_quarter  % change of the latest quarter against the same quarter a year
+#                            earlier, plus the two quarters before (for the growth rule)
+#               change_12m   % change over 12 months (currencies)
+#   Checked live on 5 October 2026: all ten series answered.
+
+US:
+  policy_rate: {id: FEDFUNDS, transform: level}
+  bond_10y: {id: DGS10, frequency: m, transform: level}
+  yield_curve: {id: T10Y2Y, frequency: m, transform: level}
+  inflation: {id: CPIAUCSL, transform: yoy}
+  gdp_growth: {id: GDPC1, transform: yoy_quarter}
+  industrial_production: {id: INDPRO, transform: yoy}
+  unemployment: {id: UNRATE, transform: level}
+  currency: {id: DTWEXBGS, frequency: m, transform: change_12m}      # broad dollar index
+  credit_spread: {id: BAMLH0A0HYM2, frequency: m, transform: level}  # US high-yield spread
+
+IN:
+  currency: {id: DEXINUS, frequency: m, transform: change_12m}       # rupees per dollar: up = rupee weaker

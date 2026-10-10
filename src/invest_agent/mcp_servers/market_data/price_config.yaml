@@ -1,0 +1,9 @@
+# Technical and Price settings (design 14.4). Decided 4 October 2026.
+beta:
+  window_years: 2
+  frequency: weekly
+  min_history_weeks: 52     # less than this gives no beta, flagged
+thinly_traded:              # 3-month average daily traded value below these
+  lookback_months: 3
+  INR: 50000000             # Rs 5 crore
+  USD: 1000000              # $1 million

@@ -1,0 +1,111 @@
+# reporting/report_text.yaml: the fixed wording in the PDF report (design 14.14).
+#
+# Kept out of the code so the explanations can be improved without touching the layout:
+#   sections   one line under each heading saying what the section shows
+#   reading    how to read the sub-scores, shown before them
+#   subscores  for each of the five sub-scores: what it measures, how it is worked out,
+#              and how to use it
+#   glossary   every term and short form the report uses, with its full form and meaning
+#
+# Plain words only; the numbers in a report never come from here.
+
+sections:
+  summary: "The verdict, how sure the analysis is, and what amount it suggests for your budget."
+  business: "Six years of the company's own reported figures: how much it sells, how much it keeps as profit, and how much cash it generates."
+  price: "How the share price has moved over the last five years, against the market index, and how much it tends to swing. Past prices do not predict future ones."
+  valuation: "How the share price compares with similar companies, using the same measures for both."
+  projection: "An estimate of next year's figures and what the shares might be worth. These are projections, not reported figures."
+  economy: "Where the company earns its money, and the current economic conditions in each of those places."
+  news: "The most important news and official filings from the last month, with links. Headlines only."
+  reasoning: "The written explanation of the verdict. Every number in it has been checked against the numbered sources."
+  scorecard: "How the five sub-scores were worked out, what each one means, and how to use them."
+  amount: "Step by step, how the suggested amount was reached: first the full position your profile allows in one stock, then the share of it the analysis supports."
+  notes: "Gaps and quality notes about the data behind this report, and what the analysis cannot see."
+  sources: "Where every number in the report came from. The numbers in square brackets in the text point here."
+  glossary: "The terms and short forms used in this report."
+
+# What the backtest found (step 15, design 14.17), shown under the verdict and in the
+# limits section, so nobody reads the verdict as a forecast. Update it after each replay.
+backtest_note: >-
+  How far to rely on the verdict: in a replay of this scorecard on large US companies from
+  2022 to 2025, stocks with low weighted scores trailed the S&P 500 over the following 12
+  months, but favourable verdicts did only about as well as the index, no better than
+  neutral ones. Read a favourable verdict as a summary of the evidence above, not as a
+  prediction of the share price.
+
+reading: >-
+  Each sub-score runs from -2 to +2. Around 0 means neutral; +1 or more is a clear
+  positive and -1 or less a clear negative. They are combined with fixed weights into one
+  weighted score, also from -2 to +2: +0.75 or above gives a favourable verdict, -0.5 or
+  below unfavourable, anything between neutral. A sub-score marked missing could not be
+  worked out from the data; its weight is shared among the others rather than guessed.
+  Confidence is high when all the sub-scores point the same way and low when strong ones
+  pull in opposite directions. A sub-score marked low reliability counts at half its usual
+  weight.
+
+subscores:
+  business_quality:
+    title: "Business quality"
+    what: "How good the business itself is: whether it grows, earns a good return on the money invested in it, keeps or improves its margins, can carry its debt, and turns profit into cash."
+    how: "Five parts, each scored from -2 to +2 against fixed bands and then weighted: revenue growth (25%), return on invested capital, averaged over 3 years (25%), the change in operating margin (15%), interest cover or net cash (20%), and the share of years with positive free cash flow (15%). For banks and insurers, return on equity replaces return on invested capital and the last two parts are skipped."
+    use: "This is the foundation of the view and carries the most weight. A high score says the company is strong; it says nothing about whether the share price is fair. Read it together with valuation."
+  valuation:
+    title: "Valuation"
+    what: "Whether the shares look cheap or dear against similar companies."
+    how: "The company's P/E and EV/EBITDA are compared with the median of its peers (P/B for banks and insurers). 30% or more cheaper scores +2, within 10% scores 0, 30% or more dearer scores -2. For a large company (market value of ₹1 lakh crore or $50 billion and above), being dearer counts for less, since market leaders usually trade at a premium to smaller peers: up to 20% dearer scores 0, 20% to 50% dearer -1, over 50% dearer -2. The two scores are averaged."
+    use: "A dear valuation is not a reason on its own to avoid a strong business, and a cheap one can be cheap for a reason. It is only as good as the peer group: when the company is far dearer than every peer (as with a conglomerate compared with one of its industries), it is marked low reliability."
+  macro_fit:
+    title: "Economic fit"
+    what: "Whether today's economic conditions help or hurt this kind of company, in the places it earns its money."
+    how: "For each economy with at least 10% of revenue, interest rates, inflation, growth, credit and the yield curve are each scored as good or bad for the company's sector, times how sensitive the sector is to them. The results are weighted by revenue share, and a weaker home currency adds to the score for companies earning over 25% abroad."
+    use: "Context rather than a forecast. Conditions change, and a long horizon will see several economic cycles."
+  news:
+    title: "News"
+    what: "The tone of the last month's news and filings about the company."
+    how: "Each relevant item is labelled positive, neutral or negative and weighted by how important it is, whether it is a fact or an opinion, and how recent it is. The net tone, from -1 to +1, is doubled; fewer than 3 relevant items halves it. It carries 5% of the scorecard."
+    use: "A small modifier, not a foundation. Large companies are in the news every week, mostly with routine items, and one month of news says little about the next ten years. A serious event, such as a bankruptcy filing or a restatement, caps the verdict at neutral whatever the scores say."
+  forecast:
+    title: "Forecast"
+    what: "Whether the estimated fair value a year from now is above or below today's share price."
+    how: "Next year's earnings and EBITDA are projected from the company's usual growth and margins, then valued at the multiples similar companies trade at today. 25% or more above today's price scores +2; more than 25% below scores -2. For a large company the downside is read more gently (within 15% below scores 0, more than 35% below -2), since the peers' multiples sit below a market leader's."
+    use: "The most speculative part, so it carries the smallest weight. It depends on the projection's assumptions and on the peer group; when the peer comparison is weak, no fair value is given and this sub-score is left out."
+
+glossary:
+  - ["8-K", "Form 8-K", "A report US companies must file with the SEC when something important happens, such as results, a deal or a change of leadership."]
+  - ["Base case", "", "The middle of the three projections, using the company's usual growth and its average margin of the last 3 years."]
+  - ["Beta", "", "How much the share price tends to move with the market. 1 means in step with it; above 1 means larger swings."]
+  - ["Confidence", "", "How sure the analysis is of its verdict: high, medium or low, depending on how much the sub-scores agree and how complete the data is."]
+  - ["CAGR", "Compound Annual Growth Rate", "The steady yearly rate that would take a starting value to an ending value over a period."]
+  - ["Crore / lakh", "", "Indian units: 1 lakh is 1,00,000 (one hundred thousand); 1 crore is 1,00,00,000 (ten million)."]
+  - ["EBITDA", "Earnings Before Interest, Taxes, Depreciation and Amortisation", "Operating profit before the cost of borrowing, tax and the wearing out of assets; a rough measure of the cash the business produces."]
+  - ["EPS", "Earnings Per Share", "Net profit divided by the number of shares."]
+  - ["EV", "Enterprise Value", "The value of the whole business: the market value of its shares plus its debt, minus its cash."]
+  - ["EV/EBITDA", "Enterprise Value to EBITDA", "What the whole business is valued at, as a multiple of its EBITDA. Lower means cheaper."]
+  - ["Full position", "", "The most this analysis would put into one stock: your concentration limit, or the default for your risk tolerance (10%, 15% or 25% of your budget). The suggested amount is a share of it."]
+  - ["Fair value", "", "An estimate of what a share would be worth a year from now if the company earns what is projected and trades at the multiples similar companies trade at today. A projection, not a prediction of the price."]
+  - ["Free cash flow", "", "Cash from the business after the money spent on equipment and buildings (capital expenditure)."]
+  - ["FY", "Fiscal Year", "The company's financial year. Apple's ends in September, most Indian companies' in March."]
+  - ["Interest cover", "", "Operating profit divided by interest costs: how many times over the company can pay the interest on its debt."]
+  - ["Large company", "", "Market value of ₹1 lakh crore or $50 billion and above. Its valuation and forecast are read on wider bands, since market leaders usually trade at a premium to smaller peers."]
+  - ["Low reliability", "", "A label for a sub-score or figure that rests on a weak comparison. It counts at half its usual weight in the weighted score."]
+  - ["Margin (operating, net)", "", "Operating margin is operating profit as a share of revenue; net margin is the final profit as a share of revenue."]
+  - ["Max drawdown", "Maximum drawdown", "The largest fall in the share price from a peak to a later low over a period."]
+  - ["Median", "", "The middle value when a list is sorted; unlike an average, one very large or small peer cannot pull it far."]
+  - ["Nifty 50 / S&P 500", "", "The main market indices for India and the US: the 50 and 500 largest companies, used here as the market to compare a share price with."]
+  - ["Net debt", "", "Debt minus cash. Below zero means the company holds more cash than debt (net cash)."]
+  - ["P/B", "Price to Book", "The share price divided by the book value (shareholders' equity) per share."]
+  - ["P/E", "Price to Earnings", "The share price divided by earnings per share: how many years of today's profit the price pays for. Lower means cheaper."]
+  - ["P/S", "Price to Sales", "The company's market value divided by its revenue."]
+  - ["Peers", "", "Similar listed companies used for comparison, chosen from the same industry and large enough to compare with."]
+  - ["Policy rate", "", "The interest rate set by the central bank (the RBI in India, the Federal Reserve in the US)."]
+  - ["Projection", "", "An estimate of future figures built on stated assumptions. Never a reported figure, and always labelled."]
+  - ["Revenue", "", "The money the company takes in from sales before any costs. For Indian companies it includes other income."]
+  - ["ROE", "Return On Equity", "Net profit as a share of shareholders' money in the business."]
+  - ["ROIC", "Return On Invested Capital", "Operating profit after tax as a share of all the money invested in the business, by shareholders and lenders. Above about 10% usually means the business creates value."]
+  - ["SEBI", "Securities and Exchange Board of India", "India's markets regulator."]
+  - ["SEC", "Securities and Exchange Commission", "The US markets regulator."]
+  - ["Sub-score", "", "One of the five scores from -2 to +2 that make up the scorecard: business quality, valuation, economic fit, news and forecast."]
+  - ["Trend growth", "", "The yearly growth the company usually shows, from a straight line through six years of revenue; when one year is far from the rest, the average of the usual years instead. The projection's base case uses the last 3 usual years."]
+  - ["Volatility", "", "How much the share price swings, as a yearly percentage. Large companies usually sit between 20% and 30%."]
+  - ["Weighted score", "", "The five sub-scores combined with fixed weights (business quality 50, valuation 20, economic fit 15, news 5, forecast 10), from -2 to +2, which sets the verdict."]
+  - ["Yield curve", "", "The gap between long-term and short-term government bond yields. When it turns negative (inverted), it has often come before a slowdown."]

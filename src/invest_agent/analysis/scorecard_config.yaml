@@ -1,0 +1,84 @@
+# analysis/scorecard_config.yaml: the scorecard, overrides, suitability rules and confidence
+# (design 14.11). Starting values; tune only after about 100 scored verdicts, and only
+# through the backtesting harness (step 15), which records a new version each time.
+
+version: 6
+
+# Version 6 (10 October 2026, Aakash): (1) valuation and forecast scores slide between their
+# bands instead of jumping (scoring_common.smooth_band), so a price move of a percent or two
+# no longer flips a sub-score by a whole point (Microsoft at exactly 20% dearer); (2) small
+# industries: Indian peers widen to the company's sector when its industry has fewer than 8
+# (ITC: tobacco to Food, Beverages & Tobacco), and a median of 3 or 4 peers is allowed; both
+# count as low reliability (half weight, confidence one step lower); (3) a note when the
+# weighted score is within 0.1 of a verdict line. Weights and lines unchanged.
+
+# Version 5 (7 October 2026, Aakash, from the replay's score bands): the unfavourable line
+# moves from -0.75 to -0.5; the favourable line stays at +0.75. In the replay of 195 past
+# US verdicts every band below -0.25 trailed the S&P 500 (21 stocks, about -11% on
+# average; the 15 at -0.5 or below about -6.6%), while everything above -0.25 did about as
+# well as the market and the highest scores no better than the middle. So the scorecard
+# spots weak stocks but does not pick winners; only the unfavourable line moves, and only
+# the smaller step, since the bands between -0.75 and -0.25 hold just 10 stocks.
+
+# Version 4 (7 October 2026, Aakash, after the Eternal run in the app): when too few peers
+# are profitable for a P/E or EV/EBITDA median, valuation is scored on P/B and P/S instead
+# (scoring_bands.yaml fallback_multiples), at half weight as low reliability, with
+# confidence one step lower. Also (spread check, same day): confidence is high only with
+# at least 4 of the 5 sub-scores, and low with fewer than 3. Weights and thresholds unchanged.
+# Version 3 (7 October 2026, Aakash, after the backtest replay): confidence drops one step
+# when there is no valuation sub-score (confidence.missing_valuation_lowers). Weights and
+# thresholds unchanged from version 2.
+# Version 2 (6 October 2026, Aakash): news counts for less and business quality for more.
+# Large companies are in the news every week, mostly with routine items, while their
+# businesses keep growing; a month of headlines should not move a 10-year view much.
+# Version 1 was 40 / 20 / 15 / 15 / 10.
+weights:                           # out of 100; a missing sub-score's weight is shared out
+  business_quality: 50
+  valuation: 20
+  macro_fit: 15
+  news: 5
+  forecast: 10
+
+# A sub-score marked low reliability (the valuation, when the peer comparison is weak)
+# counts at this share of its usual weight, since the analysis itself does not trust it.
+low_reliability_weight_factor: 0.5
+
+# Version 6: within this distance of a verdict line, the answer, card and report say the
+# verdict could move with a small change in price or results.
+near_line_margin: 0.1
+
+verdict_thresholds:
+  favourable_above: 0.75           # weighted score at or above: favourable
+  unfavourable_below: -0.5         # at or below: unfavourable; in between: neutral (-0.75 before version 5)
+
+insufficient_data:                 # no verdict at all, partial findings shown as incomplete
+  min_years: 3                     # fewer years of revenue and net income
+  needs_price: true
+  show_partial_findings: true
+
+hard_overrides:                    # each caps the verdict at neutral, whatever the score
+  serious_8k_items: ["1.03", "4.02"]       # bankruptcy, restatement
+  news_threatens_business: true            # a negative item the labelling marked as a threat (A8)
+
+suitability:                       # decided 4 October 2026
+  high_volatility_annualised: 0.35
+  high_debt_net_debt_to_ebitda: 3.0
+  short_horizon_years: 3
+  # Thinly traded comes from the price agent's flag (market_data/price_config.yaml).
+
+confidence:
+  strong: 1.0                      # a sub-score this far from zero counts as a strong signal
+  leaning: 0.5                     # this far from zero, it points one way
+  missing_valuation_lowers: true   # version 3: no valuation sub-score lowers confidence one step
+  min_scores_for_high: 4           # version 4: high needs at least 4 of the 5 sub-scores
+  min_scores_for_medium: 3         # fewer than 3 of the 5: low, whatever they say
+  # high    every sub-score agrees with the verdict (or, for neutral, all stay within
+  #         +-0.5); low   strong signals both ways; otherwise medium.
+  # One step lower when completeness was 70% to 85%. Not yet calibrated: calibration
+  # comes from the backtesting harness once verdicts have matured.
+
+# A1 and A14: a P/E or EV/EBITDA more than this far above the peer median (1.0 = 100%)
+# means the peer comparison looks weak, as the peers usually cover only part of the
+# business (a conglomerate such as Reliance). Synthesis is told so, the valuation and
+# forecast scores are marked low reliability, and confidence drops one step.
+weak_peer_premium: 1.0

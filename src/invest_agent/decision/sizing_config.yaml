@@ -1,0 +1,28 @@
+# decision/sizing_config.yaml: position sizing and the concentration check (design 14.13).
+# Starting values; to be checked against backtesting.
+
+# Steps 1 and 2 (version 2, 6 October 2026, Aakash: "2% of the budget" read as a token
+# amount). A full position is the concentration limit for the person's risk tolerance
+# (or their own limit): the most this analysis would ever put into one stock. The amount
+# is a share of that full position, set by where the weighted score sits inside its
+# verdict's band (bottom of the band gives the low end, top gives the high end), then
+# scaled by confidence. Unfavourable stays at nothing.
+share_of_full_position:
+  favourable: [0.60, 1.00]
+  neutral: [0.30, 0.60]
+  unfavourable: [0, 0]
+score_bands:                       # the weighted score's band for each verdict
+  favourable: [0.75, 1.50]         # +1.5 or above counts as the top of the band
+  neutral: [-0.5, 0.75]            # follows the verdict lines (unfavourable at -0.5 since scorecard version 5)
+confidence_factor: {high: 1.0, medium: 0.9, low: 0.8}
+
+# Step 2 and 3, by risk tolerance (the profile's low, medium, high are the design's
+# conservative, moderate and aggressive).
+risk:
+  low:    {target_volatility: 0.20, default_limit: 0.10}
+  medium: {target_volatility: 0.30, default_limit: 0.15}
+  high:   {target_volatility: 0.45, default_limit: 0.25}
+
+# Step 5: warn when the amount is more than this share of the stock's average daily
+# traded value (3 months).
+liquidity_share_of_daily_value: 0.01

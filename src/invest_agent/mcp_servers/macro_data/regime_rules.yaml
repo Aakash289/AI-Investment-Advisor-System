@@ -1,0 +1,21 @@
+# Macro regime rules (design 14.5). The rate rule was decided 4 October 2026; the rest
+# are starting values set 5 October, to be tuned with backtesting.
+rates:
+  lookback_months: 6
+  move_threshold_points: 0.25   # change of 0.25 percentage points or more counts as rising or falling
+inflation_targets:              # central bank targets, % a year
+  US: 2.0
+  IN: 4.0                       # RBI band 2 to 6
+  CN: 3.0
+  EA: 2.0
+  JP: 2.0
+  GB: 2.0
+inflation_near_band_points: 1.0 # within 1 point of target counts as near
+growth:
+  quarterly_change_points: 0.5  # US: last two quarters' average growth against the two before
+  annual_change_points: 0.3     # others: this year's IMF estimate against last year
+credit:
+  lookback_months: 3
+  move_threshold_points: 0.25   # high-yield spread up 0.25 or more: tightening; down: easing
+stale_after_days: 120           # BIS policy rates run about two to three months behind
+stale_after_days_quarterly: 200 # GDP: a quarter is published about two months after it ends

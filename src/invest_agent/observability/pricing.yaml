@@ -1,0 +1,55 @@
+# observability/pricing.yaml: model prices and free-plan limits per outside service.
+#
+# Read by observability/tracked_call.py (rate limits, quota names) now, and by the
+# cost tracker and quota checks in build step 14. OpenAI has no pricing API, so model
+# prices are typed in by hand with the date they were checked (design 14.16).
+
+models:                      # US dollars per million tokens
+  gpt-5.6-luna:
+    input: 0.20
+    output: 1.20
+    checked: "2026-10-04"    # from the design documents; recheck on OpenAI's pricing page
+  gpt-5.6-terra:
+    input: 2.00
+    output: 12.00
+    checked: "2026-10-04"
+
+# min_interval_seconds: the shortest gap allowed between two calls to the service.
+#   tracked_call waits for it instead of failing (rate limits are enforced by
+#   waiting, quotas by skipping; design 14.16).
+# daily_limit / monthly_limit: free-plan quota units; the matching .env settings
+#   override these numbers if you change plan.
+# health: the Source Health Monitor (step 14). After `failures` failed calls within
+#   `window_minutes`, the source is skipped for `cooldown_minutes` so callers go
+#   straight to their fallback. Only sources that have a fallback are watched.
+services:
+  sec_edgar:
+    min_interval_seconds: 0.11   # SEC asks for under 10 requests a second
+    health: {failures: 3, window_minutes: 10, cooldown_minutes: 15}     # fallback FMP
+  fmp:
+    daily_limit: 250
+  massive:
+    min_interval_seconds: 12     # 5 calls a minute on the free plan
+  trendlyne:
+    daily_limit: 400
+    monthly_limit: 2000
+  tavily:
+    monthly_limit: 1000          # credits
+    health: {failures: 3, window_minutes: 10, cooldown_minutes: 15}     # fallback GDELT
+  yfinance:
+    health: {failures: 3, window_minutes: 10, cooldown_minutes: 15}     # fallback Massive (US)
+  yfinance_replay:               # the backtest replay's own Yahoo calls (step 15): paced, not
+    min_interval_seconds: 1.5    # health-watched, so a batch run never marks live Yahoo down
+  fred: {}
+  mospi: {}
+  bis: {}
+  worldbank: {}
+  imf:
+    health: {failures: 3, window_minutes: 10, cooldown_minutes: 30}     # fallback World Bank
+  gdelt:
+    min_interval_seconds: 6      # GDELT allows one request every 5 seconds (its own message, 5 October)
+    # Unreachable since 5 October (A7): after 2 failures it is skipped for 12 hours, so it
+    # stops costing every request a timeout (speed, 7 October).
+    health: {failures: 2, window_minutes: 10, cooldown_minutes: 720}
+  frankfurter:
+    health: {failures: 3, window_minutes: 10, cooldown_minutes: 15}     # fallback FRED, then yfinance

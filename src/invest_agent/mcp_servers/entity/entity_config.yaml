@@ -1,0 +1,16 @@
+# Entity Resolution settings (design 14.1). Decided 4 October 2026.
+match:
+  min_score: 90          # top fuzzy match score out of 100
+  min_lead: 10           # points ahead of the runner-up; otherwise ask the user
+cross_listing:
+  behaviour: always_ask  # same company on more than one exchange, or an ADR
+  name_match_score: 90   # score used to find the same company in the other market's list
+  remember_answer: false
+reference_data:
+  refresh: on_first_use_each_day
+  max_age_hours: 24
+  on_download_failure: use_cached_and_flag
+coverage:                # version 1: not covered, short reply with the reason
+  sec_annual_forms_not_covered: ["20-F", "40-F"]
+  reit_sic_codes: [6798]
+  india_industries_not_covered: ["REIT", "InvIT"]

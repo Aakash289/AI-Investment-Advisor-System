@@ -1,0 +1,17 @@
+# guardrails/exempt_patterns.yaml: numbers the grounding check does not need a source for
+# (design 14.12, decided 4 October 2026). Everything else in the reasoning needs a fact tag.
+
+# Removed from the sentence before numbers are looked for. Regular expressions.
+remove:
+  - '\[F\d+(?:\s*,\s*F\d+)*\]'                    # the fact tags themselves
+  - '\b\d{4}-\d{2}-\d{2}\b'                       # dates such as 2026-10-02
+  - '\b\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{4}\b'
+  - '\b(?:FY|CY|Q[1-4]\s?)\d{2,4}\b'              # fiscal year and quarter labels
+  - '\b(?:items?|Item)\s+\d\.\d{2}(?:\s*(?:and|or|,)\s*\d\.\d{2})*'   # 8-K item codes
+  - '\b8-K\b'
+  - '\b\d+(?:\.\d+)?[\s-](?:years?|months?|weeks?|days?|quarters?)\b'  # durations ("10 years", "5-year")
+  - '\bS&P\s?500\b'
+  - '\bNIFTY\s?50\b'
+
+# A bare whole number between these is a year and is exempt.
+year_range: [1990, 2100]

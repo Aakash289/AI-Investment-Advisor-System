@@ -1,0 +1,50 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Test coverage and build output
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Environments
+.env
+.venv/
+venv/
+
+# uv
+uv.lock.bak
+
+# Editors
+.vscode/*
+!.vscode/settings.json
+.idea/
+
+# OS (macOS and Windows)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Gradio app: cached files and flagged examples it may create
+.gradio/
+flagged/
+
+# Delivery zips copied into the folder while building
+*.zip
+
+# Any other local env files; the template is kept
+.env.*
+!.env.example
+
+# Local data and logs: never commit retrieved financial data, the decision log,
+# saved profiles or PDF reports (all in data/), or a database copied elsewhere
+data/
+logs/
+*.log
+*.sqlite
+*.db

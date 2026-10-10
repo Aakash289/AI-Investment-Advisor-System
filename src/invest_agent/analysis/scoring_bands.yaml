@@ -1,0 +1,63 @@
+# analysis/scoring_bands.yaml: every band and weight for the scorers F1 to F3 (design 14.18).
+# Starting values from the design; tune only after about 100 scored verdicts.
+#
+# A band list reads from the top: the first row whose "above" the value exceeds gives the
+# score. Values are fractions (0.15 = 15%) unless the comment says otherwise.
+
+business_quality:                 # F1, 50% of the scorecard (40% in version 1)
+  missing_limit: 0.5              # more than half the weight missing: the sub-score is missing
+  components:
+    growth:                       # trend revenue growth a year (regression on log revenue)
+      weight: 0.25
+      bands: [[0.15, 2], [0.08, 1], [0.02, 0], [-0.02, -1], [null, -2]]
+    profitability:                # average ROIC, last 3 years (ROE for banks and insurers)
+      weight: 0.25
+      bands: [[0.15, 2], [0.10, 1], [0.06, 0], [0.03, -1], [null, -2]]
+    margin_trend:                 # operating margin, last 3 years' average minus the 3 before, in points
+      weight: 0.15
+      bands: [[0.03, 2], [0.01, 1], [-0.01, 0], [-0.03, -1], [null, -2]]
+    balance_sheet:                # interest coverage (times); net cash scores +2
+      weight: 0.20
+      bands: [[10, 2], [5, 1], [3, 0], [1.5, -1], [null, -2]]
+      # Used only when interest coverage is missing (Apple, for one, no longer reports
+      # interest expense separately): net debt to EBITDA, read as its negative so the
+      # bands still go from the top. 1x or less scores +1, up to 2x 0, up to 3x -1, above -2.
+      fallback_net_debt_to_ebitda: [[-1, 1], [-2, 0], [-3, -1], [null, -2]]
+    cash_generation:              # share of years with positive free cash flow (6 of 6 = 1.0)
+      weight: 0.15
+      bands: [[0.99, 2], [0.83, 1], [0.66, 0], [0.49, -1], [null, -2]]
+  bank_mode_skip: [balance_sheet, cash_generation]
+
+valuation:                        # F1, 20% of the scorecard: premium to the peer median
+  bands: [[0.30, -2], [0.10, -1], [-0.10, 0], [-0.30, 1], [null, 2]]
+  # Large companies (6 October 2026, Aakash): a market leader usually trades at a premium
+  # to smaller peers for its size, stability and record, so being dearer counts for less:
+  # up to 20% dearer scores 0, 20% to 50% dearer -1, over 50% dearer -2. The cheaper side
+  # is unchanged.
+  large_company_bands: [[0.50, -2], [0.20, -1], [-0.10, 0], [-0.30, 1], [null, 2]]
+  multiples: [pe, ev_ebitda]      # averaged where both are meaningful
+  bank_multiples: [pb]
+  # Scorecard version 6 (10 October): scores slide between the bands instead of jumping, so a
+  # small price move makes a small change (Microsoft flipped between 0 and -1 at 20% dearer).
+  # The business quality bands stay as steps: their inputs change once a year, not daily.
+  smooth: true
+  # When neither P/E nor EV/EBITDA has a peer median (most peers loss-making, as for
+  # Eternal on 7 October 2026), P/B and P/S are used instead where they have one; the
+  # result counts as low reliability (half weight, confidence one step lower).
+  fallback_multiples: [pb, ps]
+
+macro_fit:                        # F2, 15% of the scorecard
+  min_country_share: 0.10         # countries below this share of revenue are not scored
+  country_cap: 2
+  sensitivity_values: {High: 1.0, Medium: 0.5, Low: 0.0}
+  export_share_for_currency: 0.25 # the currency rule applies above 25% of revenue abroad
+  currency_move_threshold: 0.02   # a 12-month move of 2% or more counts as weakening or strengthening
+
+news:                             # F3, 5% of the scorecard (15% in version 1)
+  thin_coverage_items: 3          # fewer relevant items than this halves the sub-score
+
+# A large company, for the valuation and forecast bands: market value at or above this,
+# in the listing currency (₹1 lakh crore; $50 billion).
+large_company_min_market_value:
+  INR: 1000000000000      # ₹1 lakh crore
+  USD: 50000000000        # $50 billion

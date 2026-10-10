@@ -1,0 +1,39 @@
+# analysis/forecast_config.yaml: the settings for forecasting and fair value (design 14.10, 14.18).
+#
+# Starting values, not tuned: the backtesting harness (step 15) checks how often actual
+# results land inside the low-to-high range and says whether the range is too narrow.
+
+growth:
+  cap: 0.25              # no case grows faster than 25% a year (flagged when applied)
+  floor: -0.20           # or shrinks faster than 20% a year
+  # When the base growth hits the cap or floor (7 October, Eternal), the low and high
+  # cases are built round the capped base and kept at least this far from it on the
+  # free side (10 points: with a 25% cap the low case is at most 15%).
+  min_swing_when_capped: 0.10
+  width_sd: 1.0          # low and high cases: trend growth -/+ this many standard deviations
+  min_years: 3           # fewer years of revenue: no projection at all
+  base_years: 3          # base growth: average of the last 3 usual years (decided 6 October)
+  # A year whose growth sits this far from the middle of the others (in growth points)
+  # is flagged as unusual (a pandemic boom, an acquisition) and left out of the spread
+  # that sets the low and high cases (A13).
+  jump_flag: 0.25
+
+margins:
+  base_years: 3          # base case: average of the last 3 years
+  range_years: 5         # low and high cases: lowest and highest of the last 5 years
+  # A margin more than this far from the middle of the last 5 years (0.10 = 10 points) is
+  # an unusual year (Star Health's COVID-claims loss in FY2022) and is left out of the low
+  # and high cases, as long as 2 years remain (decided 6 October, Star Health run).
+  outlier_points: 0.10
+
+horizon_years: 2         # project 2 years, value on year 1
+
+# F4 sub-score: base fair value against today's price.
+# Scorecard version 6 (10 October): the score slides between the bands instead of jumping
+# (analysis/scoring_common.py smooth_band), since the price moves every day.
+smooth_score: true
+score_bands: [[0.25, 2], [0.10, 1], [-0.10, 0], [-0.25, -1], [null, -2]]
+# Large companies: the fair value uses peers' multiples, which sit below a market leader's
+# for the same reason as in valuation, so the downside bands are wider: within 15% below
+# scores 0, 15% to 35% below -1, more than 35% below -2.
+large_company_score_bands: [[0.25, 2], [0.10, 1], [-0.15, 0], [-0.35, -1], [null, -2]]

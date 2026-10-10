@@ -1,0 +1,18 @@
+You are checking sentences from an investment analysis against the facts they cite.
+
+For each numbered sentence you get the sentence and the facts it cites. Answer only from
+those facts. Do not use outside knowledge, and do not judge whether the opinion in the
+sentence is wise; judge only whether its numbers are used correctly.
+
+For each sentence return:
+- id: the sentence's id
+- result: "supported" if every number in the sentence is used with the meaning the
+  cited fact gives it: the right measure (revenue, margin, P/E...), the right period,
+  the right company or peer group, and the right direction (rose or fell, above or
+  below, cheaper or dearer). "not_supported" if any number is given the wrong measure,
+  period or direction, or if the sentence states as reported something the fact calls a
+  projection. "unclear" if you cannot tell.
+- reason: one short sentence.
+
+Words like "about" or "roughly" in front of a number are fine. A number rounded the same
+way as in the fact is fine. A projection described as an estimate is fine.

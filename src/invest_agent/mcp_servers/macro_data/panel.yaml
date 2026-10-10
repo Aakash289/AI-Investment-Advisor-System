@@ -1,0 +1,52 @@
+# mcp_servers/macro_data/panel.yaml: the six economies the Macro agent describes (design 14.5).
+#
+# One shared panel, refreshed once a day and reused by every request, so the Macro agent
+# never waits for the Geographic agent's country list (they run in parallel).
+#
+# Sources per country, decided 5 October 2026 after scripts/macro_probe.py:
+#   US      FRED for everything (series in series_map.yaml)
+#   others  BIS for the policy rate; IMF DataMapper for growth and inflation (annual,
+#           including the IMF's estimate for the current year), with the World Bank as
+#           the fallback (actual annual figures, about a year behind)
+#   India   the same, plus FRED's DEXINUS for the rupee. MoSPI's official server is the
+#           intended source for India's monthly figures, but on 5 October its upstream
+#           service kept failing (see build_progress_checklist.md, A6); it is not used yet.
+
+countries:
+  US:
+    name: United States
+    bis: US
+    imf: USA
+    world_bank: USA
+  IN:
+    name: India
+    bis: IN
+    imf: IND
+    world_bank: IND
+  CN:
+    name: China
+    bis: CN
+    imf: CHN
+    world_bank: CHN
+  EA:
+    name: Eurozone
+    bis: XM
+    imf: EURO
+    world_bank: EMU
+  JP:
+    name: Japan
+    bis: JP
+    imf: JPN
+    world_bank: JPN
+  GB:
+    name: United Kingdom
+    bis: GB
+    imf: GBR
+    world_bank: GBR
+
+imf_indicators:
+  gdp_growth: NGDP_RPCH          # real GDP growth, % a year
+  inflation: PCPIPCH             # consumer price inflation, average, % a year
+world_bank_indicators:
+  gdp_growth: NY.GDP.MKTP.KD.ZG
+  inflation: FP.CPI.TOTL.ZG

@@ -1,0 +1,43 @@
+# eval/spread_companies.yaml: the companies for the verdict spread check (eval/spread_check.py).
+#
+# The question this answers (Aakash, 7 October 2026): does the agent say Neutral for every
+# company? So the list is chosen to cover companies that should not all look the same:
+# strong businesses at fair prices, strong businesses at very high prices, weak or shrinking
+# businesses, loss-makers, cheap cyclicals, a bank, an insurer, India and the US.
+#
+# "why" is only our own reason for including it, not a prediction the check is graded on.
+# "reply" answers the agent if it asks which listing is meant.
+#
+# Every run uses the same profile, so only the company changes: 5 lakhs, medium risk,
+# 10 years, growth (no suitability caps for a long horizon and a growth goal).
+
+version: 1
+profile_text: "I have 5 lakhs, medium risk, 10 years, goal growth"
+
+companies:
+  # India
+  - {query: "TCS on NSE", why: "high-quality IT services, steady"}
+  - {query: "ITC on NSE", why: "cash-rich consumer business, moderate price"}
+  - {query: "Coal India on NSE", why: "cheap, high dividend, cyclical"}
+  - {query: "ONGC on NSE", why: "cheap state oil producer"}
+  - {query: "Asian Paints on NSE", why: "quality at a very high price"}
+  - {query: "Nestle India on NSE", why: "quality at a very high price"}
+  - {query: "HDFC Bank on NSE", why: "bank mode"}
+  - {query: "Sun Pharmaceutical on NSE", why: "large pharma, steady growth"}
+  - {query: "Tata Steel on NSE", why: "cyclical, volatile profits"}
+  - {query: "Vodafone Idea on NSE", why: "loss-making, heavy debt"}
+  - {query: "Zee Entertainment on NSE", why: "shrinking business"}
+  - {query: "One97 Communications Paytm on NSE", why: "loss-making for years"}
+  - {query: "IRCTC on NSE", why: "monopoly, high margins"}
+  - {query: "Bajaj Finance on NSE", why: "NBFC, fast growth"}
+  # US
+  - {query: "Microsoft (MSFT, Nasdaq)", why: "quality, premium price"}
+  - {query: "Nvidia (NVDA, Nasdaq)", why: "very fast growth, very high price"}
+  - {query: "Intel (INTC, Nasdaq)", why: "shrinking, losses"}
+  - {query: "Pfizer (PFE, NYSE)", why: "falling revenue after COVID, cheap"}
+  - {query: "Coca-Cola (KO, NYSE)", why: "steady, fairly priced"}
+  - {query: "Ford (F, NYSE)", why: "cheap, cyclical, heavy debt"}
+  - {query: "Boeing (BA, NYSE)", why: "losses, heavy debt"}
+  - {query: "Alphabet (GOOGL, Nasdaq)", why: "quality at a moderate price"}
+  - {query: "Johnson & Johnson (JNJ, NYSE)", why: "steady, defensive"}
+  - {query: "Target (TGT, NYSE)", why: "retailer, margins under pressure"}

@@ -1,0 +1,63 @@
+# mcp_servers/filings/trendlyne_field_map.yaml: Trendlyne codes for Indian fundamentals.
+#
+# Confirmed against Reliance Industries on 5 October 2026 (design 14.3, first-month checks).
+# Trendlyne figures are consolidated, profit attributable to owners, in Rs crore.
+#
+# history: codes that exist for the latest year and 1 to 5 years ago (code, codemy1 ... codemy5)
+# latest:  codes that exist for the latest year only
+#
+# Two Indian conventions to know (checked against Reliance's numbers):
+#   - "Operating Profit" (opa) is profit before depreciation, interest and tax, excluding
+#     other income, so it is used as EBITDA; operating income (EBIT) = opa - depreciation.
+#   - Revenue history (sra) is total revenue including other income; it is used for all
+#     years so growth rates compare like with like.
+#
+# Answers come back as labels, not codes ("Rev. Ann. 2Y ago"). labels maps each label,
+# lower-cased with punctuation removed and the "N years ago" part taken off, to our name.
+
+crore: 10000000                 # Rs 1 crore = 1,00,00,000; money figures are multiplied by this
+
+history:
+  sra: revenue
+  npa: net_income
+  opa: ebitda
+  inta: interest_expense
+  depa: depreciation_amortization
+  cfoa: operating_cash_flow
+  totalshareholdersfundsa: total_equity
+
+latest:
+  taxa: income_tax
+  longtermborrowingsa: long_term_debt
+  shorttermborrowingsa: short_term_debt
+  cashandcashequivalentendofyeara: cash
+  basicepsa: eps_basic
+  sharenow: shares_outstanding
+  dividend1yactual: dividend_per_share_1y
+  dividend5yactual: dividends_per_share_5y_sum
+  debtcea: debt_to_equity_reported
+
+labels:
+  total rev ann: revenue
+  rev ann: revenue
+  net profit ann: net_income
+  operating profit ann: ebitda
+  interest ann: interest_expense
+  depr: depreciation_amortization
+  depr ann: depreciation_amortization
+  cash from operating act ann: operating_cash_flow
+  total shareholders funds ann: total_equity
+  tax ann: income_tax
+  lt debt ann: long_term_debt
+  st debt ann: short_term_debt
+  cash plus cash eqv end of year ann: cash
+  basic eps ann: eps_basic
+  number of shares current adjusted: shares_outstanding
+  number of shares current adj: shares_outstanding     # the label Trendlyne actually sends (seen 5 October)
+  dividend 1year: dividend_per_share_1y
+  dividend sum 5y: dividends_per_share_5y_sum
+  total debt to total equity ann: debt_to_equity_reported
+
+# Not money: kept as they come, never multiplied by a crore.
+not_money: [eps_basic, shares_outstanding, dividend_per_share_1y, dividends_per_share_5y_sum,
+            debt_to_equity_reported]

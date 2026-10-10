@@ -1,0 +1,27 @@
+# Profile and Budget Intake settings (design 14.2). Decided 4 October 2026.
+follow_up:
+  style: one_combined_question
+  ask_at_most: 1
+budget_confirmation:      # only these phrasings stop and ask before running
+  ranges: true            # "10 to 20k", "2-3 lakh"
+  mixed_units: true       # "$5 lakh", "k" next to lakh or crore, "L" or "Cr"
+  missing_currency: false # a bare number uses the default below instead
+  implausible_size: false
+currency_default_order: [stored_profile, listing_currency]  # stated in the output
+lakh_crore_implies: INR
+existing_holdings:
+  ask: false
+  extract: false          # sizing assumes no existing holding; output says so
+
+# Added 5 October 2026 when intake was built.
+# Fields the analysis needs; missing ones are asked for once, in one combined question.
+required_fields: [budget, risk_tolerance, horizon_years, goal]
+# If a required field is still missing after asking once, these defaults are used and
+# the output says they were assumed. The budget has no default: without it the
+# analysis runs without a specific amount. The concentration limit is not listed
+# because sizing already has defaults by risk tolerance (14.13).
+defaults_after_asking_once:
+  risk_tolerance: medium
+  horizon_years: 5
+  goal: growth
+  liquidity_needs: false

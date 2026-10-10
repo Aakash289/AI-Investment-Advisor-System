@@ -1,0 +1,17 @@
+# eval/backtest_config.yaml: settings for the backtesting harness (design 14.17).
+#
+# Starting values from the design. The harness only suggests changes; nothing here
+# changes a verdict until Aakash approves a new scorecard config version.
+
+horizon_months: 12            # a verdict is judged on the 12 months after it was given
+neutral_band: 0.10            # neutral counts as right when the excess return is within +-10%
+
+# How much evidence before the harness says anything about tuning or calibration.
+min_verdicts_for_tuning: 100  # no weight or threshold suggestions before this many scored verdicts
+min_per_confidence: 20        # a confidence level needs this many verdicts to be compared
+holdout_share: 0.30           # tuning is checked on a held-out 30% before it is suggested
+
+# Forecast ranges: if actuals land outside the low-to-high range much more often than
+# about a third of the time, the range is too narrow (14.10).
+forecast_outside_flag: 0.45
+min_forecasts: 10

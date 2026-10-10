@@ -1,0 +1,60 @@
+# compliance/disclaimer.yaml: the disclaimer, its situation lines and the banned phrases
+# (design 14.15). Versioned: every answer records the version it showed. Change the text
+# here, never in code, and raise the version when you do.
+#
+# This wording is a draft. It needs legal review before the tool is used by anyone other
+# than its builder (design 11.1).
+
+version: "1"
+
+short: "Information only, not investment advice. Full disclaimer below."
+
+full: >-
+  This is an automated analysis for information only. It is not investment advice, and
+  this tool is not registered as an investment adviser with SEBI, the US SEC, or any
+  other regulator. It is based on public data that may be delayed, incomplete, or wrong.
+  Projected figures are estimates built on stated assumptions, not forecasts of the share
+  price. Amounts in another currency are converted at official reference rates and are
+  indicative; your bank's rate will differ. Brokerage, taxes, and the costs of investing
+  abroad are not included. The analysis does not know your other holdings or your full
+  financial situation. Share prices can fall as well as rise, and you can lose money.
+  Consider speaking to a registered investment adviser before investing.
+
+# Added only when they apply. {reason} is filled in by the code.
+situations:
+  amount_withheld: "No amount is given because {reason}."
+  insufficient_data: "The data was not complete enough for a verdict."
+  no_budget: "No amount is given because no budget was provided."
+  partial_analysis: "Some data was skipped to stay within time or free-plan usage limits."
+  not_covered: "This company is not covered in version 1 because {reason}."
+  existing_holding: "This amount assumes you do not already own this stock."
+
+# A sentence containing any of these is removed from the written reasoning and logged.
+# Matched as whole words, any case. Text inside quotation marks (a news headline) is
+# not checked, since it is shown as a quoted headline with its outlet.
+banned_phrases:
+  - guaranteed
+  - guarantee
+  - risk-free
+  - risk free
+  - no risk
+  - zero risk
+  - will definitely
+  - definitely will
+  - can't lose
+  - cannot lose
+  - can not lose
+  - can't go wrong
+  - sure thing
+  - sure shot
+  - sure-shot
+  - buy now
+  - sell now
+  - must buy
+  - must sell
+  - act now
+  - certain to rise
+  - bound to rise
+  - will double
+  - multibagger
+  - once in a lifetime

@@ -1,0 +1,46 @@
+# verification/completeness_fields.yaml: what counts towards the completeness score.
+# Design 14.9, decided 4 October 2026; tuned later by backtesting. Read by completeness.py.
+
+# Critical: any one missing withholds the amount, whatever the score.
+critical:
+  current_price: {}
+  shares_outstanding: {}
+  revenue: {min_years: 3}
+  net_income: {min_years: 3}
+  total_equity: {}
+  budget: {}                     # the user's budget, from the profile
+
+# Weighted fields. The score is the weighted share of these that came back.
+important:                       # weight 2 each
+  six_years_history: {}          # revenue for 6 fiscal years
+  operating_margin: {}
+  net_margin: {}
+  free_cash_flow: {}
+  total_debt: {}
+  volatility_1y: {}
+  home_macro: {}
+  sector: {}
+supporting:                      # weight 1 each
+  news: {}
+  geographic_split: {}
+  peer_medians: {}
+  panel_macro: {}
+
+weights: {important: 2, supporting: 1}
+
+# Bank mode: these leave the important tier (14.3).
+bank_mode_drop: [free_cash_flow, total_debt]
+
+# Gaps that exist by design are left out of the score and listed separately (14.9).
+by_design_gaps:
+  IN: [india_bond_yield, india_credit_spread, analyst_revisions]
+  US: [analyst_revisions]
+
+# Agents not built yet in this build. Their fields are left out of the score and listed
+# as pending, so the score reflects only what the system can fetch today. Remove a line
+# when its build step is done.
+pending_until_built: {}         # every agent is built (step 8c done); this list is kept for later additions
+
+thresholds:
+  proceed: 0.85                  # at or above: normal
+  lower_confidence: 0.70         # from here to proceed: confidence lowered one step; below: amount withheld

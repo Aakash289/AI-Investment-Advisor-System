@@ -1,0 +1,32 @@
+# analysis/sector_sensitivity.yaml: how strongly each of our 11 sectors reacts to the economy
+# (design 14.5, used by the macro fit score F2 in 14.18). Drafted 6 October 2026 from the
+# design's sample rows; to be reviewed by Aakash and tuned with backtesting.
+#
+#   rates                 how much rising or falling interest rates matter
+#   benefits_from_rising  true flips the sign: higher rates help (lenders' margins widen)
+#   inflation             how much inflation above target hurts
+#   growth                how much the economy's growth (and credit conditions) matters
+#   currency              how much a weaker home currency helps (exporters' foreign earnings
+#                         are worth more at home)
+# Each is High (1), Medium (0.5) or Low (0).
+
+sectors:
+  Energy:                 {rates: Low,    benefits_from_rising: false, inflation: Low,    growth: Medium, currency: Medium}
+  Materials:              {rates: Medium, benefits_from_rising: false, inflation: Medium, growth: High,   currency: Medium}
+  Industrials:            {rates: Medium, benefits_from_rising: false, inflation: Medium, growth: High,   currency: Medium}
+  Consumer Discretionary: {rates: High,   benefits_from_rising: false, inflation: Medium, growth: High,   currency: Low}
+  Consumer Staples:       {rates: Low,    benefits_from_rising: false, inflation: Medium, growth: Low,    currency: Low}
+  Health Care:            {rates: Low,    benefits_from_rising: false, inflation: Low,    growth: Low,    currency: Medium}
+  Financials:             {rates: High,   benefits_from_rising: true,  inflation: Medium, growth: High,   currency: Low}
+  Information Technology: {rates: Medium, benefits_from_rising: false, inflation: Low,    growth: Medium, currency: Medium}
+  Communication Services: {rates: Medium, benefits_from_rising: false, inflation: Low,    growth: Medium, currency: Low}
+  Utilities:              {rates: High,   benefits_from_rising: false, inflation: Medium, growth: Low,    currency: Low}
+  Real Estate:            {rates: High,   benefits_from_rising: false, inflation: Medium, growth: Medium, currency: Low}
+
+# Industry overrides, matched anywhere in the industry label (Trendlyne's for India,
+# Yahoo's otherwise), any case. Only the listed values change.
+industry_overrides:
+  - {match: "Information Technology Services", market: IN, currency: High}   # Indian IT earns in dollars
+  - {match: "IT Services", market: IN, currency: High}
+  - {match: "Software", market: IN, currency: High}
+  - {match: "Insurance", rates: Medium}

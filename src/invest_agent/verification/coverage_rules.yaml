@@ -1,0 +1,8 @@
+# Version 1 coverage rules (design 14.1 and 14.9). Decided 4 October 2026.
+# Each of these ends the request with a short "not covered in version 1" reply.
+not_covered:
+  sec_annual_forms: ["20-F", "40-F"]   # checked in Entity Resolution, before retrieval
+  reits_and_invits: true               # SIC 6798; Trendlyne REIT or InvIT industry
+min_market_value:                      # checked after price and shares are verified
+  INR: 5000000000                      # Rs 500 crore
+  USD: 300000000                       # $300 million

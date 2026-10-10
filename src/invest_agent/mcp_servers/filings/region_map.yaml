@@ -1,0 +1,48 @@
+# mcp_servers/filings/region_map.yaml: reported region names to the macro panel (design 14.7).
+#
+# Companies report revenue by their own region names ("Americas", "Greater China",
+# "Outside India"); the Macro agent describes six economies (US, IN, CN, EA, JP, GB). Each
+# name below, written in lower case without punctuation, maps to one panel code, or to
+# ROW (rest of world: no single economy to read). Anything not listed also counts as ROW
+# and is flagged, so this table can be extended.
+#
+# Checked against Apple's 10-K for FY2025 (6 October 2026): its geographic axis gives
+# country:US, country:CN and "other countries"; its segments give Americas, Europe,
+# Greater China, Japan and Rest of Asia Pacific. Reliance's annual report gives Within
+# India and Outside India.
+
+regions:
+  us: US
+  united states: US
+  americas: US                 # mostly the US for most filers (design 14.7)
+  north america: US
+  europe: EA
+  emea: EA
+  eurozone: EA
+  euro area: EA
+  united kingdom: GB
+  uk: GB
+  gb: GB
+  china: CN
+  greater china: CN
+  cn: CN
+  japan: JP
+  jp: JP
+  india: IN
+  within india: IN
+  in: IN
+  rest of asia pacific: ROW
+  asia pacific: ROW
+  outside india: ROW
+  other countries: ROW
+  other: ROW
+  rest of world: ROW
+  international: ROW
+  non us: ROW
+
+# The home economy for the default when a company reports no usable breakdown.
+home_default:
+  US: US
+  IN: IN
+
+sum_check_tolerance: 0.01      # parts within 1% of the total

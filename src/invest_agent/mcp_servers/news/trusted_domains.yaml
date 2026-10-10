@@ -1,0 +1,25 @@
+# Trusted outlets per market and the press release wires (design 14.6).
+US:
+  - reuters.com
+  - apnews.com
+  - bloomberg.com
+  - cnbc.com
+  - wsj.com
+  - ft.com
+IN:
+  - economictimes.indiatimes.com
+  - business-standard.com
+  - livemint.com
+  - thehindubusinessline.com
+  - reuters.com
+  - moneycontrol.com          # added 4 October 2026
+  - financialexpress.com      # added 4 October 2026
+  - ndtvprofit.com            # added 4 October 2026
+  - cnbctv18.com              # added 4 October 2026
+press_release_wires:          # allowed, always labelled company statement
+  - prnewswire.com
+  - businesswire.com
+  - globenewswire.com
+spike_rule:
+  multiple_of_30_day_average: 3
+  min_baseline_articles: 5    # below this the spike rule is skipped

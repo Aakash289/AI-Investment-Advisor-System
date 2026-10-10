@@ -1,0 +1,38 @@
+# eval/replay_universe.yaml: the US companies and past dates the backtest replays (design 14.17).
+#
+# Version 5 (7 October 2026): chosen fairly. Earlier versions replayed 50 of today's largest
+# companies, which picks winners with hindsight: many are on today's list because their
+# prices rose after 2022 (NVIDIA, Broadcom, Eli Lilly), which were exactly the stocks that
+# looked expensive back then, so the test was tilted against the valuation score.
+#
+# Now the candidates are about 100 large US non-financial companies across sectors,
+# including many that later fell hard (Intel, PayPal, Boeing, 3M, CVS, Moderna, Estee
+# Lauder, Walgreens, Target, Nike, Pfizer). On each date the replay takes the `select_top`
+# largest by their market value on that date (today's value moved back by the price change),
+# so the companies are the ones an investor would have seen as the largest at the time.
+#
+# Survivorship is reduced, not removed: companies taken over or delisted before today
+# (Activision, Pioneer, VMware) cannot be priced and are missing; Walgreens, taken private
+# in 2025, can be priced only up to then.
+#
+# Banks, insurers and REITs are left out (bank mode needs the SIC code the replay does not
+# fetch), as are companies that split up during the period (GE). Sector groups double as
+# the replay's peer groups. Change `version` whenever the list, the dates or the scoring
+# rules change, so old and new results are never mixed.
+
+version: 5
+dates: ["2022-03-31", "2023-03-31", "2024-03-31", "2025-03-31"]
+select_top: 50
+benchmark: "^GSPC"
+profile: {risk_tolerance: medium, horizon_years: 10, goal: growth, budget_amount: 1000000, budget_currency: USD}
+
+sectors:
+  Information Technology: [AAPL, MSFT, NVDA, AVGO, ORCL, CSCO, ADBE, CRM, ACN, INTC, AMD, QCOM, TXN, IBM, INTU, NOW, AMAT, MU, ADI, LRCX, V, MA, PYPL]
+  Communication Services: [GOOGL, META, NFLX, DIS, CMCSA, T, VZ, CHTR, TMUS, EA]
+  Consumer Discretionary: [AMZN, TSLA, HD, LOW, MCD, SBUX, NKE, TGT, BKNG, TJX, F, GM]
+  Consumer Staples: [PEP, KO, PG, WMT, COST, PM, MO, MDLZ, CL, EL, WBA, KHC]
+  Health Care: [JNJ, PFE, MRK, ABBV, LLY, AMGN, TMO, ABT, DHR, BMY, CVS, MDT, GILD, ISRG, SYK, ZTS, REGN, VRTX, MRNA]
+  Energy: [XOM, CVX, COP, EOG, SLB, OXY]
+  Industrials: [CAT, DE, HON, UPS, LMT, RTX, BA, MMM, UNP, ADP, NOC, FDX]
+  Utilities: [NEE, DUK, SO]
+  Materials: [LIN, APD, SHW, FCX]

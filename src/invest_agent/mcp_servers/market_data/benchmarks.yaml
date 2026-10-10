@@ -1,0 +1,3 @@
+# Benchmark index per market (design 14.4).
+US: "^GSPC"    # S&P 500
+IN: "^NSEI"    # Nifty 50

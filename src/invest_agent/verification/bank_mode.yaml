@@ -1,0 +1,13 @@
+# Bank mode for banks, NBFCs and insurers (design 14.3). Decided 4 October 2026.
+detect:
+  us_sic_range: [6000, 6411]
+  us_sic_excluded: [6798]               # REITs, not covered
+  india_industries: ["Bank", "NBFC", "Finance", "Insurance"]   # matched anywhere in Trendlyne's industry, any case
+fields:
+  revenue_is: total_income              # interest + other income; premiums + investment income
+  pulled: [total_income, net_income, equity, book_value_per_share, total_assets, dividends]
+  not_pulled: [gross_margin, ebitda, free_cash_flow, interest_coverage, debt_ratios]
+valuation_multiples: [pb, pe]           # never EV/EBITDA
+profitability_measure: roe
+suitability_rules_skipped: [high_debt]
+known_gaps: [bad_loans, low_cost_deposit_share]

@@ -1,0 +1,13 @@
+# verification/peer_rules.yaml: which peers count towards a median (design 14.9, A1 to A3).
+#
+# Decided 6 October after the first peer comparisons: Reliance was compared with very
+# small refiners (Goa Carbon, Panama Petrochem) and Apple with small companies (Rimini,
+# Turtle Beach), whose multiples say little about a giant. A peer is kept only if its
+# market value is at least the larger of the two floors below; if that would leave fewer
+# than min_peers, the largest peers are kept up to min_peers.
+
+min_peers: 5
+share_of_company: 0.02          # at least 2% of the company's own market value
+absolute_floor:                 # and at least this, in the listing currency
+  USD: 2000000000               # $2 billion
+  INR: 50000000000              # ₹5,000 crore

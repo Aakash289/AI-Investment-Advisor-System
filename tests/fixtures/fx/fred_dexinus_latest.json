@@ -1,0 +1,34 @@
+{
+ "observations": [
+  {
+   "realtime_start": "2026-09-28",
+   "realtime_end": "2026-09-28",
+   "date": "2026-09-25",
+   "value": "95.81"
+  },
+  {
+   "realtime_start": "2026-09-28",
+   "realtime_end": "2026-09-28",
+   "date": "2026-09-24",
+   "value": "95.96"
+  },
+  {
+   "realtime_start": "2026-09-28",
+   "realtime_end": "2026-09-28",
+   "date": "2026-09-23",
+   "value": "95.74"
+  },
+  {
+   "realtime_start": "2026-09-28",
+   "realtime_end": "2026-09-28",
+   "date": "2026-09-22",
+   "value": "95.59"
+  },
+  {
+   "realtime_start": "2026-09-28",
+   "realtime_end": "2026-09-28",
+   "date": "2026-09-21",
+   "value": "95.81"
+  }
+ ]
+}

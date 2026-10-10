@@ -1,0 +1,25 @@
+# verification/tolerances.yaml: when two sources disagree, and which checks count as failed.
+# Design 14.9, decided 4 October 2026. Read by cross_source.py and sanity.py.
+
+# A gap is |a - b| / the larger of |a| and |b|. Above these it is a conflict.
+conflict:
+  statement: 0.005          # financial statement figures; filings round to thousands or millions
+  price: 0.01               # sources differ slightly in timing
+  fx: 0.01                  # set in 14.8 (the FX server applies it to its own cross-check)
+
+# A ratio this close to one of these factors between two values is a units mistake
+# (one source in thousands or crore, the other in units), corrected rather than judged by tier.
+units_mistake:
+  factors: [1000, 1000000, 10000000]     # thousand, million, crore
+  closeness: 0.02                        # within 2% of the factor
+
+# Which figures belong to which kind above.
+kinds:
+  price: [current_price, high_52w, low_52w, ma_50d, ma_200d]
+
+sanity:
+  eps_tolerance: 0.05                   # reported EPS within 5% of net income / shares
+  fiscal_year_stale_months: 18          # latest annual figures older than this are stale
+  fiscal_year_missing_months: 30        # older than this counts as missing
+  price_stale_business_days: 5
+  price_missing_business_days: 15

@@ -1,0 +1,39 @@
+You are labelling news items about one company for an investment analysis.
+Company: {company_name} ({ticker}, {exchange}). Sector: {sector}.
+
+For each item below you get an id, outlet, published date, headline, and snippet.
+Judge each item only from the text given. Do not add facts, numbers, or context
+that are not in the item.
+
+Return one object per item:
+- id: the item's id, exactly as given
+- relevant: true only if the item is mainly about this company. False for
+  namesakes, other companies in the same group, or passing mentions. Share price
+  moves alone, with no reason given, are not relevant.
+- kind: "fact_report" (reports something that happened), "opinion" (a view or
+  recommendation), "speculation" (rumour, "could", "may", unnamed sources), or
+  "company_statement" (the company's own press release or quote).
+- event_type: one of earnings, guidance, management_change, merger_acquisition,
+  litigation, regulatory, product, rating_change, macro_or_sector, other.
+- sentiment: positive, neutral, or negative, for the company's long-term
+  prospects, not for this week's share price.
+- materiality: high, medium, or low. High only for events that could change
+  the business itself: a change of chief executive or chairman, a large deal,
+  a restatement, a guidance change, or legal or regulatory action with large
+  consequences. Routine lawsuits, investigations and the company's own legal
+  actions are medium or low.
+- threatens_business: true only if the item reports, as fact, one of these:
+  bankruptcy or insolvency; fraud, or accounts that must be restated; a default
+  on debt; loss of a licence or a ban on the company's main business; a fine,
+  penalty or damages larger than about a tenth of the company's yearly profit;
+  the chief executive or chairman leaving suddenly. Otherwise false. A lawsuit
+  that is filed, revived or under appeal, a probe, a verdict that will be
+  appealed, or a lawsuit the company itself brought is false.
+- duplicate_of: if this item reports the same event as an earlier item in the
+  list (the same deal, lawsuit or announcement, even in different words), the id
+  of that earlier item; otherwise null.
+- reason: one short sentence, using only words from the item.
+
+If you are unsure, choose "speculation" and "low". Never invent an item or an id.
+Insider trading disclosures are facts; small trades by relatives or employees are
+low materiality, while promoter pledges or large promoter sales are high.
