@@ -20,10 +20,6 @@ with each answer.
 This is a personal project built to learn how to make an LLM agent that is honest about
 what it knows. It is not investment advice. See [Disclaimer](#disclaimer).
 
-<p align="center">
-  <img src="docs/images/app_result.png" alt="The app: chat on the left, result card with score bars, price chart and PDF on the right" width="900">
-</p>
-
 ---
 
 ## What it does
