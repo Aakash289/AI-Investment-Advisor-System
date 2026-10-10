@@ -1,4 +1,4 @@
-# Investment Suitability Agent
+# AI Investment Suitability Agent
 
 Ask about a company listed in India or the US, in plain words, with your budget and how
 you invest, and the agent tells you whether the stock is a sensible fit for you and how
